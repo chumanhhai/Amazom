@@ -1,0 +1,34 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap');
+
+$colorNavbar: #203040;
+$colorWhite: #ffffff;
+$colorBlack: #000000;
+$colorBorder: #c0c0c0;
+$colorYellowMain: #f0c040; 
+$colorGreyLight: #f8f8f8;
+$colorPinkLight: #ffb6c1;
+
+
+html {
+    font-family: "Ubuntu";
+}
+
+body {
+    margin: 0px;
+    min-height: 100vh;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.root {
+    min-height: 100%;
+}
+
+a {
+    text-decoration: none;
+    color: $colorNavbar;
+}
+
+a:visited {
+    color: $colorNavbar;
+}

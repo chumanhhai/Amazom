@@ -1,0 +1,52 @@
+.Navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 7px 25px;
+    background-color: $colorNavbar;
+
+    .headerWrapper {
+        display: flex;
+        align-items: center;
+    }
+
+    .icon {
+        border: 1px solid $colorWhite;
+        padding: 5px;
+        border-radius: 5px;
+    }
+
+    .header {
+        font-size: 32px;
+        color: $colorWhite;
+        font-weight: bolder;
+        margin-left: 10px;
+    }
+
+    .navItemWrapper {
+        display: flex;
+        align-items: center;
+    }
+
+    .navItem {
+        margin-left: 25px;
+        color: $colorWhite;
+        font-weight: bolder;
+    }
+
+    .logOut {
+        cursor: pointer;
+    }
+
+    .cart {
+        display: flex;
+        align-items: flex-start;
+        .notify {
+            font-size: 12px;
+            padding: 2px 5px;
+            color: $colorWhite;
+            font-weight: bold;
+            border-radius: 50%;
+            background-color: red;
+        }
+    }
+}

@@ -1,0 +1,25 @@
+.Main {
+    padding: 20px 20px;
+
+    .container {
+        width: 90%;
+        margin: auto;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .loading {
+        width: 50px;
+        height: 50px;
+        display: block;
+        margin: auto;
+        margin-top: 100px;
+    }
+
+    @media screen and (max-width: 770px) {
+        .container {
+            justify-content: center;
+        }
+    }
+}
