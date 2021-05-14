@@ -21,10 +21,10 @@ create table supplier(
 create table _order(
 	order_id varchar(50) primary key,
     customer_id varchar(50),
-    createdAt datetime,
+    createdAt int8,
     ship_address varchar(40),
     ship_phone_number varchar(12),
-    total_price float);
+    total_cost float);
     
 create table product(
 	product_id varchar(50) primary key,

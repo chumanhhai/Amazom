@@ -36,7 +36,7 @@ const LoginForm = (props) => {
                             dispatch(saveCart(cart))
 
                             // redirect
-                            if(props.from == "productDetail") {
+                            if(props.from === "productDetail") {
                                 history.go(-1)
                             } else {
                                 history.push("/")

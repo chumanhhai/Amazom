@@ -9,6 +9,8 @@ import store from "./redux/store"
 import ErrorFetching from "./component/ErrorFetching";
 import ProductDetail from "./component/ProductDetail";
 import Gateway from "./component/Gateway";
+import Cart from "./component/Cart";
+import Checkout from "./component/Checkout";
 
 library.add(fas)
 
@@ -27,6 +29,12 @@ function App() {
           </Route>
           <Route exact path="/product/:index">
             <ProductDetail/>
+          </Route>
+          <Route exact path="/checkout">
+            <Checkout />
+          </Route>
+          <Route exact path="/cart">
+            <Cart />
           </Route>
           <Route exact path="/*">
             <ErrorFetching/>

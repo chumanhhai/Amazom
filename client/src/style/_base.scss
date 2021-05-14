@@ -17,6 +17,9 @@ body {
     margin: 0px;
     min-height: 100vh;
     position: relative;
+}
+
+* {
     box-sizing: border-box;
 }
 
@@ -31,4 +34,39 @@ a {
 
 a:visited {
     color: $colorNavbar;
+}
+
+.error {
+    color: red;
+    font-size: 14px;
+    margin: 4px 0;
+}
+
+.success {
+    color: green;
+    font-size: 14px;
+    margin: 4px 0;
+}
+
+button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+
+.smallLoading {
+    margin-left: 10px;
+}
+
+.iconicBtn {
+    padding: 14px;
+    border-radius: 5px;
+    background-color: $colorYellowMain;
+    border: none;
+}
+
+.iconicBtn:hover {
+    border: 1px solid $colorBlack;
 }

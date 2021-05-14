@@ -11,7 +11,7 @@ router.post("/cart/addItem", auth, async (req, res) => {
             customer_id: req.params.userId
         }
         await cartTable.addItem(data)
-        res.status(200).send({ sucess: true, error: null })
+        res.status(200).send({ success: true, error: null })
     } catch(e) {
         res.status(200).send({ success: null, error: e })
     }
@@ -24,7 +24,7 @@ router.post("/cart/removeItem", auth, async (req, res) => {
             customer_id: req.params.userId
         }
         await cartTable.removeItem(data)
-        res.status(200).send({ sucess: true, error: null })
+        res.status(200).send({ success: true, error: null })
     } catch(e) {    
         res.status(200).send({ success: null, error: e })
     }
@@ -48,7 +48,7 @@ router.get("/cart/getCart", auth, async(req, res) => {
         const result = await cartTable.getCart(req.params.userId)
         res.status(200).send({ success: { data: result }, error: null })
     } catch(e) {
-        res.status(200).send({ sucess: null, error: e })
+        res.status(200).send({ success: null, error: e })
     }
 })
 

@@ -1,8 +1,8 @@
-const cartReducer = (state = null, action) => {
+const cartReducer = (state = [], action) => {
     switch(action.type) {
         case "saveCart": return action.payload
         case "addItemToCart": {
-            const newState = state.push(action.payload)
+            const newState = state.concat(action.payload)
             return newState
         }
         default: return state

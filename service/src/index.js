@@ -4,6 +4,7 @@ require("./database/startDb")
 const productRouter = require("./router/product")
 const customerRouter = require("./router/customer")
 const cartRouter = require("./router/cart")
+const orderRouter = require("./router/order")
 
 const app = express()
 const PORT = process.env.PORT || 3000
@@ -13,5 +14,6 @@ app.use(express.json())
 app.use(productRouter)
 app.use(customerRouter)
 app.use(cartRouter)
+app.use(orderRouter)
 
 app.listen(PORT, () => console.log("Server is up on port ", PORT))

@@ -5,7 +5,6 @@ import { useSelector, useDispatch } from "react-redux"
 import customerAPI from "../network/customer"
 import { saveUser } from "../redux/action/userAction"
 import { saveCart } from "../redux/action/cartAction"
-import cartApi from "../network/cart"
 
 const Navbar = () => {
 
@@ -22,14 +21,18 @@ const Navbar = () => {
             const type = localStorage.getItem("type")
             if(token) { // if user is already logined before
                 try {
-                    const { success, error } = await customerAPI.getMyProfile(token)
-                    if(success) {
-                        const { customer, cart } = success
-                        if(customer) {
-                            dispatch(saveUser(customer))
-                            dispatch(saveCart(cart))
-                        } else throw new Error("Can not get user profile by token.")
-                    } else throw error
+                    if(type === "customer") {
+                        const { success, error } = await customerAPI.getMyProfile(token)
+                        if(success) {
+                            const { customer, cart } = success
+                            if(customer) {
+                                dispatch(saveUser(customer))
+                                dispatch(saveCart(cart))
+                            } else throw new Error("Can not get user profile by token.")
+                        } else throw error
+                    } else {
+                        //////////////////
+                    }
                 } catch(e) {
                     console.log(e);
                 } 
@@ -43,7 +46,7 @@ const Navbar = () => {
         localStorage.removeItem("token") // remove token
         localStorage.removeItem("type") // remove type of user
         dispatch(saveUser(null)) // delete user in redux store
-        dispatch(saveCart(null)) // delete cart in redux store
+        dispatch(saveCart([])) // delete cart in redux store
     }
 
     return (
