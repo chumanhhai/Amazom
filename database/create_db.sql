@@ -25,7 +25,7 @@ create table _order(
     ship_address varchar(40),
     ship_phone_number varchar(12),
     total_cost float);
-    
+
 create table product(
 	product_id varchar(50) primary key,
     name varchar(30),
@@ -34,6 +34,7 @@ create table product(
     full_description text,
     supplier_id varchar(50),
     cost float,
+    createdAt long,
     foreign key (supplier_id) references supplier(supplier_id) on delete cascade);
 
 create table order_detail(
@@ -51,12 +52,12 @@ create table cart_detail(
     primary key (customer_id, product_id),
     foreign key (customer_id) references customer(customer_id) on delete cascade,
     foreign key (product_id) references product(product_id) on delete cascade);
-    
+
 create table image(
 	cps_id varchar(50),
     data mediumblob);
     
-ALTER USER 'root'@'localhost' IDENTIFIED WITH 'password' BY '314159265';
+# ALTER USER 'root'@'localhost' IDENTIFIED WITH 'password' BY '314159265'; 
 
     
     

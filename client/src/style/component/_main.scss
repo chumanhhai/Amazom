@@ -1,4 +1,34 @@
 .Main {
+
+    .filter {
+        width: 80%;
+        margin: 20px auto;
+        display: flex;
+        justify-content: space-between;
+        .search {
+            display: flex;
+            .inputSearch {
+                padding: 5px;
+                border: 1px solid $colorBorder;
+                border-radius: 0;
+                border-right: 0;
+            }
+            .btnSearch {
+                border-radius: 0;
+                border: 1px solid $colorBorder;
+                border-left: none;
+            }
+        }
+        .productType, .orderBy {
+            padding: 7px;
+            border-radius: 0;
+            border-color: $colorBorder;
+        }
+        .productType {
+            margin-right: 40px;
+        }
+    }
+
     .container {
         padding: 20px;
         width: 90%;
@@ -6,6 +36,11 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
+        .message {
+            text-align: center;
+            width: 100%;
+            font-size: 16px;
+        }
     }
 
     .dTGAUq {
@@ -14,22 +49,35 @@
 
     .carouselItem {
         width: 100%;
-        height: 300px;
+        height: 500px;
         object-fit: cover;
         object-position: center;
-    }
-
-    .loading {
-        width: 50px;
-        height: 50px;
-        display: block;
-        margin: auto;
-        margin-top: 100px;
     }
 
     @media screen and (max-width: 770px) {
         .container {
             justify-content: center;
+        }
+        .carouselItem {
+            height: 300px;
+        }
+        .filter {
+            flex-direction: column;
+            .selectWrapper {
+                display: flex;
+                width: 100%;
+                justify-content: space-between;
+                margin-top: 20px;
+            }
+            .search {
+                width: 100%;
+                .inputSearch {
+                    width: 80%;
+                }
+                .btnSearch {
+                    width: 20%;
+                }
+            }
         }
     }
 }
