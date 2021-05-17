@@ -14,10 +14,19 @@ const customerAPI = {
     },
 
     getMyProfile: async function() {
+        const token = "Bearer " + localStorage.getItem("token")
         const { data: result } = await axios.get(this.baseUrl + "/me/profile", {
             headers: {
-                Authorization: "Bearer " + localStorage.getItem("token")
+                Authorization: token
             }
+        })
+        return result
+    },
+
+    updateProfile: async function(update) {
+        const token = "Bearer " + localStorage.getItem("token")
+        const  { data: result } = await axios.post(this.baseUrl + "/updateProfile", update, {
+            headers: { Authorization: token }
         })
         return result
     }

@@ -1,7 +1,7 @@
 .Navbar {
     display: flex;
     justify-content: space-between;
-    padding: 7px 25px;
+    padding: 7px 20px;
     background-color: $colorNavbar;
 
     .headerWrapper {
@@ -33,8 +33,56 @@
         font-weight: bolder;
     }
 
-    .logOut {
-        cursor: pointer;
+    .userMenu {
+        position: relative;
+        width: 80px;
+        font-size: 14px;
+        font-weight: bold;
+        color: $colorWhite;
+        margin-left: 10px;
+        .imageWrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            img {
+                height: 30px;
+                width: 30px;
+                border-radius: 50%;
+                object-fit: cover;
+                object-position: center;
+            }
+            .dropIcon {
+                margin-left: 10px;
+                height: auto;
+                font-size: 16px;
+            }
+        }
+        .content {
+            display: none;
+            position: absolute;
+            padding: 10px;
+            background-color: $colorNavbar;
+            border-radius: 5px;
+            z-index: 1;
+            .menuItem {
+                cursor: pointer;
+                margin: 10px 0;
+                text-align: center;
+                color: $colorWhite
+            }
+            .menuItem:hover {
+                color: $colorYellowMain;
+            }
+        }
+    }
+    .userMenu:hover {
+        .content {
+            display: block;
+        }
+        .imageWrapper .dropIcon {
+            color: $colorYellowMain;
+        }
     }
 
     .cart {

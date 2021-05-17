@@ -89,9 +89,10 @@ const Checkout = () => {
             <div className="payment title element">Payment details</div>
             <form onSubmit={formSubmitHandler} className="element">
                 <div className="phoneNumberText">Phone number</div>
-                <input type="text" name="phoneNumber" className="phoneNumber" required />
+                <input type="text" name="phoneNumber" defaultValue={user.phone_number}
+                    className="phoneNumber" required />
                 <div className="addressText">Address</div>
-                <input type="text" name="address" className="address" required/>
+                <input type="text" name="address" defaultValue={user.address} className="address" required/>
                 <div className="buttonWrapper element">
                     <button className="backButton" type="button" onClick={btnBackHandler}>BACK</button>
                     <button className="order iconicBtn">

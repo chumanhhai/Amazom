@@ -4,6 +4,8 @@ select * from _order;
 select * from order_detail;
 select * from cart_detail;
 
+drop table image;
+
 delete from _order where order_id="o1";
 delete from order_detail where order_id="o1";
 

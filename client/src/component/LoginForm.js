@@ -35,18 +35,19 @@ const LoginForm = (props) => {
                             // dispatch to save cart
                             dispatch(saveCart(cart))
 
+                            // save token to local storage
+                            localStorage.setItem("token", token)
+                            
+                            // store in localstorage
+                            if(isCustomer) localStorage.setItem("type", "customer")
+                            else localStorage.setItem("type", "supplier")
+
                             // redirect
                             if(props.from === "productDetail") {
                                 history.go(-1)
                             } else {
                                 history.push("/")
                             }
-
-                            // save token to local storage
-                            localStorage.setItem("token", token)
-                            
-                            if(isCustomer) localStorage.setItem("type", "customer")
-                            else localStorage.setItem("type", "supplier")
                         } else {
                             setInCorrectInfo(true)
                         }

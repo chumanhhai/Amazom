@@ -5,6 +5,7 @@ const productRouter = require("./router/product")
 const customerRouter = require("./router/customer")
 const cartRouter = require("./router/cart")
 const orderRouter = require("./router/order")
+const imageRouter = require("./router/image")
 
 const app = express()
 const PORT = process.env.PORT || 3000
@@ -15,5 +16,6 @@ app.use(productRouter)
 app.use(customerRouter)
 app.use(cartRouter)
 app.use(orderRouter)
+app.use(imageRouter)
 
-app.listen(PORT, () => console.log("Server is up on port ", PORT))
+app.listen(PORT, () => console.log("Server is up on port", PORT))

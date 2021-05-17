@@ -40,4 +40,17 @@ router.get("/customer/me/profile", auth, async (req, res) => {
     }
 })
 
+router.post("/customer/updateProfile", auth, async (req, res) => {
+    try {
+        const update = {
+            customer_id: req.params.userId,
+            ...req.body
+        }
+        await customerTable.updateProfile(update)
+        res.status(200).send({ success: true, error: null })
+    } catch(e) {
+        res.status(200).send({ success: null, error: e })
+    }
+})
+
 module.exports = router

@@ -11,6 +11,8 @@ import ProductDetail from "./component/ProductDetail";
 import Gateway from "./component/Gateway";
 import Cart from "./component/Cart";
 import Checkout from "./component/Checkout";
+import Profile from "./component/Profile";
+import OrderDetail from "./component/OrderDetail"
 
 library.add(fas)
 
@@ -27,11 +29,17 @@ function App() {
           <Route exact path="/gateway">
             <Gateway/>
           </Route>
+          <Route exact path="/profile">
+            <Profile />
+          </Route>
           <Route exact path="/product/:index">
             <ProductDetail/>
           </Route>
           <Route exact path="/checkout">
             <Checkout />
+          </Route>
+          <Route exact path="/order/:id">
+            <OrderDetail />
           </Route>
           <Route exact path="/cart">
             <Cart />

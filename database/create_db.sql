@@ -54,8 +54,9 @@ create table cart_detail(
     
 create table image(
 	cps_id varchar(50),
-    data blob);
+    data mediumblob);
     
+ALTER USER 'root'@'localhost' IDENTIFIED WITH 'password' BY '314159265';
 
     
     

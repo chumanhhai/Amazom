@@ -9,7 +9,7 @@ const orderDetailTable = {
     },
 
     getAllItems: async function(order_id) {
-        const query = "SELECT p.* FROM product p, (SELECT product_id, amount FROM order_detail od WHERE od.order_id=?) o WHERE p.product_id=o.product_id"
+        const query = "SELECT p.*, o.amount FROM product p, (SELECT product_id, amount FROM order_detail od WHERE od.order_id=?) o WHERE p.product_id=o.product_id"
         const [result] = await connection.query(query, order_id)
         return result
     }

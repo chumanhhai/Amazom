@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import { Link, useHistory } from "react-router-dom"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
@@ -9,6 +9,7 @@ import { saveCart } from "../redux/action/cartAction"
 const Navbar = () => {
 
     const dispatch = useDispatch()
+    const history = useHistory()
 
     // get user from store redux
     const user = useSelector((state) => state.user)
@@ -47,6 +48,7 @@ const Navbar = () => {
         localStorage.removeItem("type") // remove type of user
         dispatch(saveUser(null)) // delete user in redux store
         dispatch(saveCart([])) // delete cart in redux store
+        history.push("/")
     }
 
     return (
@@ -61,8 +63,17 @@ const Navbar = () => {
                         { cart && <div className="notify">{cart.length}</div> }
                     </Link> }
                 { !user && <Link className="signin navItem" to="/gateway">Sign In</Link> }
-                { user && <FontAwesomeIcon className="navItem logOut"
-                    onClick={logOutHandler} icon="sign-out-alt" style={{ fontSize: "22px" }}/> }
+                { user && <div className="userMenu">
+                    <div className="imageWrapper">
+                        <img src={"http://localhost:3000/image/" + (user.customer_id || user.supplier_id)} />
+                        <FontAwesomeIcon icon="sort-down" className="dropIcon"/>
+                    </div>
+                    <div className="content">
+                        { user.customer_id &&
+                            <Link className="menuItem" to="/profile">Profile</Link> }
+                        <div className="menuItem" onClick={logOutHandler}>Log out</div>
+                    </div>
+                </div> }
             </div>
         </div>
     );

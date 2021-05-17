@@ -8,7 +8,7 @@ class Connection {
             this.connection = mysql.createPool({
                 host: process.env.HOST,
                 database: process.env.DB_NAME,
-                user: process.env.USER,
+                user: process.env.USER_NAME,
                 password: process.env.PASSWORD
             })
             console.log("DB is connected");
