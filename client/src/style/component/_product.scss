@@ -2,6 +2,7 @@
     width: 290px;
     height: 484px;
     margin: 15px;
+    margin-top: 0px;
 
     .card {
         border: 1px solid $colorBorder;
@@ -33,7 +34,7 @@
 
     .supplierName {
         text-align: right;
-        color: $colorNavbar;
+        color: #2a52be;
         font-weight: bold;
     }
 

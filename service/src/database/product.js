@@ -44,7 +44,17 @@ const productTable = {
     },
 
     getAllProductsSupplier: async function(supplier_id) {
-        const query = `SELECT * FROM product WHERE supplier_id=?`
+        const query = `SELECT * FROM product WHERE supplier_id=? ORDER BY createdAt DESC`
+
+        const [result] = await connection.query(query, supplier_id)
+        return result
+    },
+
+    getAllProductSold: async function(supplier_id) {
+        const query = `SELECT sum(od.amount) amount, p.cost 
+            FROM order_detail od, (SELECT product_id, cost FROM product WHERE supplier_id=?) p
+            WHERE od.product_id=p.product_id
+            GROUP BY p.product_id`
 
         const [result] = await connection.query(query, supplier_id)
         return result
@@ -78,6 +88,13 @@ const productTable = {
         const query = "DELETE FROM product WHERE product_id=?"
 
         await connection.query(query, [product_id])
+    },
+
+    getProduct: async function(product_id) {
+        const query = "SELECT * FROM product WHERE product_id=?"
+
+        const [result] = await connection.query(query, product_id)
+        return result
     }
 
 }

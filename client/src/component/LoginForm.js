@@ -1,9 +1,11 @@
 import {  useState } from "react"
 import customerAPI from "../network/customer"
+import supplierAPI from "../network/supplier"
 import { useHistory } from "react-router-dom"
 import { useDispatch } from "react-redux"
 import { saveUser } from "../redux/action/userAction"
 import { saveCart } from "../redux/action/cartAction"
+import { saveAllProducts } from "../redux/action/allProductsAction"
 
 const LoginForm = (props) => {
     const { isCustomer, signUpOptionHandler, joinAsWhatHandler } = props
@@ -23,9 +25,9 @@ const LoginForm = (props) => {
         if(password.length < 6) // pwd length >0 6
             setErrorPwd(true)
         else { // sign in
-            if(isCustomer) {
-                const account = { email, password }
-                try {
+            try {
+                if(isCustomer) { // if customer
+                    const account = { email, password }
                     const { success, error } = await customerAPI.logIn(account)
                     if(success) {
                         const { customer, cart, token } = success
@@ -40,7 +42,6 @@ const LoginForm = (props) => {
                             
                             // store in localstorage
                             if(isCustomer) localStorage.setItem("type", "customer")
-                            else localStorage.setItem("type", "supplier")
 
                             // redirect
                             if(props.from === "productDetail") {
@@ -52,10 +53,34 @@ const LoginForm = (props) => {
                             setInCorrectInfo(true)
                         }
                     } else throw error
-                } catch (e) {
-                    alert("Something went wrong. Please try again!")
-                    console.log(e);
+                } else { // if supplier
+                    const account = { email, password }
+                    const { success, error } = await supplierAPI.logIn(account)
+                    if(success) {
+                        const { supplier, products, token } = success
+                        if(supplier) {
+                            // dispatch to save user
+                            dispatch(saveUser(supplier))
+
+                            //dispatch to save all products
+                            dispatch(saveAllProducts(products))
+
+                            // save token to local storage
+                            localStorage.setItem("token", token)
+                            
+                            // store in localstorage
+                            localStorage.setItem("type", "supplier")
+
+                            // redirect
+                            history.push("/supplier/home")
+                        } else {
+                            setInCorrectInfo(true)
+                        }
+                    } else throw error
                 }
+            } catch (e) {
+                alert("Something went wrong. Please try again!")
+                console.log(e);
             }
         }
     }

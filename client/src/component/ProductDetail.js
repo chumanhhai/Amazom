@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux"
 import { useParams, useHistory } from "react-router-dom"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import cartAPI from "../network/cart"
 import { saveCart, addItemToCart } from "../redux/action/cartAction"
 import Loading from "react-loading"
@@ -11,33 +11,37 @@ const ProductDetail = () => {
     const history = useHistory()
     const dispatch = useDispatch()
 
+    // supplier can not visit this route
+    useEffect(() => {
+        const type = localStorage.getItem("type")
+         if(type === "supplier") {
+            history.push("/supplier/home")
+        }
+    }, [])
+
     // set quantity array
     const qtyArray = []
     for(let i = 1; i < 10; i++)
         qtyArray[i-1] = i
 
-    // set image array
-    const images = ["https://m.media-amazon.com/images/I/817EoIxv-8L._AC_UL320_.jpg",
-        "https://m.media-amazon.com/images/I/91SNyF6wi2L._AC_UL320_.jpg"]
 
+    // get data from redux store
+    const product = useSelector((state) => state.allProducts[index])
+    const customer = useSelector(state => state.user)
+    const cart = useSelector(state => state.cart)
+
+    // set image array
+    const images = ["http://localhost:3000/image/"+product.product_id]
     const [currentImageIndex, setImageIndex] = useState(0)
     const [qty, setQty] = useState(1)
     const [addToCartPending, setAddToCartPending] = useState(false)
     const [addToCartError, setAddToCartError] = useState(false)
     const [addToCartSuccess, setAddToCartSuccess] = useState(false)
 
+    // image on change
     const imageSelectHandler = (index) => {
         setImageIndex(index)
     }
-
-    // get product
-    const product = useSelector((state) => state.allProducts[index])
-    
-    // get user
-    const customer = useSelector(state => state.user)
-
-    // get cart
-    const cart = useSelector(state => state.cart)
 
     // btn add cart
     const btnAddCartHandler = async () => {

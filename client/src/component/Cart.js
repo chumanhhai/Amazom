@@ -22,11 +22,19 @@ const Cart = () => {
         qtyArray[i] = i+1
 
     useEffect(() => {
-        let sum = 0
-        cart.forEach(item => {
-            sum += item.cost*item.amount
-        })
-        setTotalCost(sum)
+        const type = localStorage.getItem("type")
+        if(type === "customer") {
+            let sum = 0
+            cart.forEach(item => {
+                sum += item.cost*item.amount
+            })
+            setTotalCost(sum)
+            
+        } else if(type === "supplier") {
+            history.push("/supplier/home")
+        } else {
+            history.push("/gateway")
+        }
     }, [cart])
 
     // qty on change
@@ -64,7 +72,7 @@ const Cart = () => {
             <div className="items">
                 <div className="header">CART</div>
                 {cart.map((item, index) => <div className="itemWrapper" key={item.product_id}>
-                    <img src="https://m.media-amazon.com/images/I/817EoIxv-8L._AC_UL320_.jpg" alt="img" />
+                    <img src={"http://localhost:3000/image/"+item.product_id} alt="img" />
                     <div className="itemInfoWrapper">
                         <div className="name">{item.name}</div>
                         <div className="itemInfoWrapperBottom">

@@ -72,9 +72,9 @@ button {
     padding: 14px;
     border-radius: 5px;
     background-color: $colorYellowMain;
-    border: none;
+    border: 1px solid $colorBlack;
 }
 
 .iconicBtn:hover {
-    border: 1px solid $colorBlack;
+    color: $colorWhite;
 }

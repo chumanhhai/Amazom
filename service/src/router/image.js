@@ -30,7 +30,7 @@ router.post("/image/productUpload", auth, upload.single("image"), async (req, re
             cps_id: req.body.product_id,
             data: req.file.buffer
         }
-        await imageTable(image)
+        await imageTable.upload(image)
         res.status(200).send({ success: true, error: null })
     } catch(e) {
         res.status(200).send({ success: null, error: e })
@@ -39,11 +39,15 @@ router.post("/image/productUpload", auth, upload.single("image"), async (req, re
 
 router.get("/image/:id", async (req, res) => {
     try {
-        const [result] = await imageTable.getImage(req.params.id)
+        let [result] = await imageTable.getImage(req.params.id)
+        if(!result) {
+            [result] = await imageTable.getImage("avatarDefault")
+        }
         res.status(200).send(result.data)
     } catch(e) {
         res.status(200).send({ success: null, error: e })
     }
 })
+
 
 module.exports = router

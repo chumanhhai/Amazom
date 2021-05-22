@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Loading from "react-loading"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { useHistory } from "react-router-dom"
 import { v4 as uuid } from "uuid"
@@ -12,6 +12,16 @@ const Checkout = () => {
     // get from redux store
     const cart = useSelector(state => state.cart)
     const user = useSelector(state => state.user)
+
+    // only customer can visit this route
+    useEffect(() => {
+        const type = localStorage.getItem("type")
+         if(type === "supplier") {
+            history.push("/supplier/home")
+        } else if(!type) {
+            history.push("/gateway")
+        }
+    }, [])
 
     // state
     const [paymentPending, setPaymentPending] = useState(false)

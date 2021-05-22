@@ -1,12 +1,13 @@
 import { useState, useRef, useEffect } from "react"
-import { useSelector } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
 import customerAPI from "../network/customer"
 import imageAPI from "../network/image"
 import Loading from "react-loading"
 import orderAPI from "../network/order"
 import ErrorFetching from "./ErrorFetching"
 import moment from  "moment"
-import { Link } from "react-router-dom"
+import { Link, useHistory } from "react-router-dom"
+import { saveUser } from "../redux/action/userAction"
 
 const Profile = () => {
 
@@ -14,14 +15,32 @@ const Profile = () => {
     const user = useSelector(state => state.user)
 
     // avatar
-    const defaultImgSrc = "http://localhost:3000/image/" + user.customer_id
-    const [imgSrc, setImgSrc] = useState(defaultImgSrc)
+    const [defaultImgSrc, setDefaultImgSrc] = useState() 
+    const [imgSrc, setImgSrc] = useState()
     const avatarRef = useRef() 
+    const history = useHistory()
+    // only customer can visit this route
+    useEffect(() => {
+        const type = localStorage.getItem("type")
+        if(type === "customer") {
+            if(user) {
+                const src = "http://localhost:3000/image/" + user.customer_id + "?" + Date.now()
+                setDefaultImgSrc(src)
+                setImgSrc(src)
+            }
+        }
+        else if(type === "supplier") {
+            history.push("/supplier/home")
+        } else if(!type) {
+            history.push("/gateway")
+        }
+    }, [user])
 
     // state of doing api
     const [updatePending, setUpdatePending] = useState(false)
-    const [updateSuccess, setUpdateSuccess] = useState(false)
     const [updateError, setUpdateError] = useState(false)
+
+    const dispatch = useDispatch()
 
     // image pick handler
     const imagePickHandler = (e) => {
@@ -36,7 +55,6 @@ const Profile = () => {
         // set state
         setUpdatePending(true)
         setUpdateError(false)
-        setUpdateSuccess(false)
 
         const update = {
             name: e.target.name.value,
@@ -58,8 +76,14 @@ const Profile = () => {
                 }
                 resolve()
             })
-            await Promise.all([infoPromise, avatarPromise])
-            setUpdateSuccess(true)
+            await Promise.all([infoPromise, avatarPromise]) // save to db
+
+            const newUser = {
+                ...user,
+                ...update
+            }
+            dispatch(saveUser(newUser)) // save to redux store
+            window.location.reload()
         } catch(e) {
             console.log(e);
             setUpdateError(true)
@@ -102,7 +126,7 @@ const Profile = () => {
 
     return (
         <div className="Profile">
-            <form className="profile" onSubmit={formSubmitHandler}>
+            { user && <form className="profile" onSubmit={formSubmitHandler}>
                 <div className="avatarWrapper">
                     <img src={imgSrc} alt="avatar" className="avatar" onClick={() => avatarRef.current.click()} />
                     <input type="file" name="avatar" accept=".jpg, .png, .jpeg" ref={avatarRef}
@@ -129,10 +153,9 @@ const Profile = () => {
                     { updatePending && <Loading type="spin" height="18px" width="18px"
                         color="#000000" className="smallLoading"/> }
                 </button>
-                { updateSuccess && <div className="success">Update successfully.</div> }
                 { updateError && <div className="error">Something went wrong.</div> }
-            </form>
-            <div className="orderHistory">
+            </form> }
+            { orders && <div className="orderHistory">
                 { fetchOrderPending && <Loading type="spin" height="28px" width="28px"
                 color="#000" className="bigLoading" /> }
                 { fetchOrderError &&  <ErrorFetching />}
@@ -150,7 +173,7 @@ const Profile = () => {
                         </td>
                     </tr>) }
                 </tbody></table>}
-            </div>
+            </div> }
         </div>
     )
 }

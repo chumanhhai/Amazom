@@ -1,5 +1,6 @@
 import { useState } from "react"
 import customerAPI from "../network/customer"
+import supplierAPI from "../network/supplier"
 import { v4 as uuid } from "uuid"
 
 const SignUpForm = (props) => {
@@ -23,16 +24,16 @@ const SignUpForm = (props) => {
         else if(password !== rePassword) // re-pwd and pwd must be the same
             setErrorRePwd(true)
         else { // sign up
-            if(isCustomer) {
-                const customer = {
-                    customer_id: uuid(),
-                    name: name,
-                    email: email,
-                    password: password,
-                    address: "",
-                    phone_number: ""
-                }
-                try {
+            try {
+                if(isCustomer) { // if customer
+                    const customer = {
+                        customer_id: uuid(),
+                        name: name,
+                        email: email,
+                        password: password,
+                        address: "",
+                        phone_number: ""
+                    }
                     setPending(true)
                     const { success, error } = await customerAPI.signUp(customer)
                     setPending(false)
@@ -42,9 +43,27 @@ const SignUpForm = (props) => {
                         alert("Something when wrong. Please sign up again!")
                         throw error
                     }
-                } catch(e) {
-                    console.log(e);
+                } else { // if supplier
+                    const supplier = {
+                        supplier_id: uuid(),
+                        name: name,
+                        email: email,
+                        password: password,
+                        address: "",
+                        phone_number: ""
+                    }
+                    setPending(true)
+                    const { success, error } = await supplierAPI.signUp(supplier)
+                    setPending(false)
+                    if(success) {
+                        loginOptionHandler()
+                    } else {
+                        alert("Something when wrong. Please sign up again!")
+                        throw error
+                    }
                 }
+            } catch(e) {
+                console.log(e);
             }
         }
     }

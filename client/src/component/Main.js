@@ -1,6 +1,7 @@
 import Product from "./Product"
 import { useSelector, useDispatch } from "react-redux"
 import { useEffect, useState, useRef } from "react"
+import { useHistory } from "react-router-dom"
 import productAPI from "../network/product"
 import { saveAllProducts } from "../redux/action/allProductsAction"
 import Carousel from "react-elastic-carousel"
@@ -12,6 +13,7 @@ const Main = () => {
     const limit = 20
 
     const dispatch = useDispatch()
+    const history = useHistory()
 
     // get all products from redux store
     const allProducts = useSelector((state) => state.allProducts)
@@ -64,7 +66,11 @@ const Main = () => {
     }
 
     useEffect(() => {
-        fetchProducts(false)
+        if(localStorage.getItem("type") === "supplier") { // if current user is supplier
+            history.push("/supplier/home")
+        } else { // if current user is not a supplier
+            fetchProducts(false)
+        }
     }, [selectProductType, orderBy])
     
     // ------------- carousel -------------
@@ -123,6 +129,7 @@ const Main = () => {
                     loader={<div className="message">LOADING...</div>}
                     endMessage={<div className="message">NOTHING TO SEE</div>}>
                     {allProducts.map((product, index) => <Product key={product.product_id} index={index} product={product} />)}
+                    {[1,2,3,4,5].map(e => <div key={e} className="extra"></div>)}
                 </InfiniteScroll>
         </div>
     );

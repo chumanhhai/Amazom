@@ -5,7 +5,6 @@ import Loading from "react-loading"
 import ErrorFetching from "./ErrorFetching"
 
 const OrderDetail = () => {
-
     const [items, setItems] = useState([])
     const [fetchItemsPending, setFetchItemsPending] = useState(true)
     const [fetchItemsError, setFetchItemsError] = useState(false)
@@ -18,25 +17,42 @@ const OrderDetail = () => {
 
     // get items from db
     useEffect(() => {
-        const fetchItem = async () => {
-            setFetchItemsPending(true)
-            setFetchItemsError(false)
-            setFetchItemsSuccess(false)
-
-            try {
-                const { success, error } = await orderAPI.getAllItems({ order_id })
-                setFetchItemsPending(false)
-                if(success) {
-                    setFetchItemsSuccess(true)
-                    setItems(success.data)
-                } else throw error
-            } catch(e) {
-                console.log(e);
-                setFetchItemsError(true)
+        const type = localStorage.getItem("type")
+        if(type === "customer") {
+            const fetchItem = async () => {
+                setFetchItemsPending(true)
+                setFetchItemsError(false)
+                setFetchItemsSuccess(false)
+    
+                try {
+                    const { success, error } = await orderAPI.getAllItems({ order_id })
+                    setFetchItemsPending(false)
+                    if(success) {
+                        setFetchItemsSuccess(true)
+                        setItems(success.data)
+                    } else throw error
+                } catch(e) {
+                    console.log(e);
+                    setFetchItemsError(true)
+                }
             }
+            fetchItem()
+        } else if(type === "supplier") {
+            history.push("/supplier/home")
+        } else if(!type) {
+            history.push("/gateway")
         }
-        fetchItem()
     }, [])
+
+    // get total cost
+    const [totalCost, setTotalCost] = useState(0)
+    useEffect(() => {
+        if(items) {
+            let sum = 0
+            items.forEach(item => sum += item.cost*item.amount)
+            setTotalCost(sum)
+        }
+    }, [items])
 
     return (
         <div className="OrderDetail">
@@ -46,7 +62,7 @@ const OrderDetail = () => {
             { fetchItemsSuccess && <div className="main">
                 <div className="items">
                     {items.map(item => <div className="item" key={item.product_id}>
-                        <img src="https://m.media-amazon.com/images/I/817EoIxv-8L._AC_UL320_.jpg"
+                        <img src={"http://localhost:3000/image/"+item.product_id}
                             alt="product" className="image" />
                         <div className="infoWrapper">
                             <div className="name">{item.name}</div>
@@ -68,7 +84,7 @@ const OrderDetail = () => {
                     </div>
                     <div className="cost element">
                         <span className="fieldText">Total cost: </span>
-                        <span className="fieldValue">${items.length}</span>
+                        <span className="fieldValue">${totalCost}</span>
                     </div>
                     <button className="btnBack iconicBtn element"
                         onClick={() => history.go(-1)}>BACK TO PROFILE</button>

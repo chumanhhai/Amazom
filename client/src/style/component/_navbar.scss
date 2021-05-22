@@ -35,7 +35,7 @@
 
     .userMenu {
         position: relative;
-        width: 80px;
+        min-width: 80px;
         font-size: 14px;
         font-weight: bold;
         color: $colorWhite;

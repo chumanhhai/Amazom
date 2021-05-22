@@ -13,6 +13,8 @@ import Cart from "./component/Cart";
 import Checkout from "./component/Checkout";
 import Profile from "./component/Profile";
 import OrderDetail from "./component/OrderDetail"
+import SupplierHome from "./component/SupplierHome";
+import CreateAndUpdateProduct from "./component/CreateAndUpdateProduct";
 
 library.add(fas)
 
@@ -43,6 +45,15 @@ function App() {
           </Route>
           <Route exact path="/cart">
             <Cart />
+          </Route>
+          <Route exact path="/supplier/home">
+            <SupplierHome />
+          </Route>
+          <Route exact path="/updateProduct/:index">
+            <CreateAndUpdateProduct />
+          </Route>
+          <Route exact path="/createProduct">
+            <CreateAndUpdateProduct />
           </Route>
           <Route exact path="/*">
             <ErrorFetching/>
